@@ -5,21 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>XadotoSound V1 — ¡Tu sonido, tus reglas!</title>
   <style>
-    @import url('https://fonts.googleapis.com/css?family=Montserrat:700,400&display=swap');
     body, html {
       margin: 0;
       padding: 0;
       min-height: 100vh;
       font-family: 'Montserrat', Arial, sans-serif;
       color: #fff;
-      overflow-x: hidden;
-    }
-    body {
-      min-height: 100vh;
       background: linear-gradient(-45deg, #0f0 0%, #009966 50%, #00ff99 100%);
       background-size: 400% 400%;
       animation: gradientBG 10s ease-in-out infinite;
-      position: relative;
     }
     @keyframes gradientBG {
       0% {background-position: 0% 50%;}
@@ -34,22 +28,8 @@
       box-shadow: 0 8px 30px rgba(0,0,0,0.3);
       padding: 36px 30px 30px 30px;
     }
-    h1 {
-      font-size: 2.6em;
-      margin-top: 0;
-      margin-bottom: 0.3em;
-      text-align: center;
-      font-weight: 700;
-      letter-spacing: 1px;
-      color: #b6ff00;
-      text-shadow: 0 4px 8px #000d,0 0 16px #0f0b;
-    }
-    h2 {
-      text-align: center;
-      margin-bottom: 1.3em;
-      font-weight: 400;
-      color: #fff;
-    }
+    h1 { text-align: center; color: #b6ff00; }
+    h2 { text-align: center; }
     .important-warning {
       background: linear-gradient(90deg,#b6ff00 0,#00ff99 100%);
       color: #053e0b;
@@ -102,10 +82,6 @@
       color: #f1f1f1;
       text-decoration: none;
     }
-    .download-link svg {
-      margin-right: 4px;
-      margin-bottom: 2px;
-    }
     .paypal-btn {
       display: flex;
       align-items: center;
@@ -137,45 +113,6 @@
       color: #f1f1f1;
       text-decoration: none;
     }
-    .paypal-link svg {
-      vertical-align: middle;
-      margin-right: 11px;
-      margin-bottom: 2px;
-    }
-    .version {
-      display: block;
-      text-align: center;
-      margin-top: 10px;
-      color: #ccffcc;
-      font-size: 1em;
-      letter-spacing: 1px;
-      opacity: 0.8;
-      font-weight: 600;
-      text-shadow: 0 1px 4px #000b;
-    }
-    .counter-box {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-top: 30px;
-      margin-bottom: 8px;
-      font-size: 1.16em;
-      font-weight: bold;
-      color: #b6ff00;
-      background: rgba(0,255,90,0.08);
-      border-radius: 10px;
-      padding: 10px 18px 8px 18px;
-      box-shadow: 0 1px 10px #00ff9955;
-      letter-spacing: 0.5px;
-      gap: 9px;
-      width: fit-content;
-      margin-left: auto;
-      margin-right: auto;
-      animation: bounceIn 1.7s;
-    }
-    .counter-box svg {
-      margin-right: 7px;
-    }
     .section-title {
       text-align:center;
       font-size: 1.2em;
@@ -184,14 +121,6 @@
       margin: 36px 0 16px 0;
       letter-spacing: 1px;
       text-shadow: 0 1px 6px #000a;
-    }
-    #visitors-map {
-      width: 100%;
-      height: 340px;
-      border-radius: 16px;
-      margin: 0 auto 16px auto;
-      box-shadow: 0 2px 16px #00ff9955;
-      background: #e6ffe6;
     }
     .country-list {
       width:100%;
@@ -206,31 +135,92 @@
       overflow-y: auto;
       letter-spacing: 0.5px;
     }
-    /* Cusdis comments */
-    #cusdis_thread {
-      margin-top: 18px;
-      margin-bottom: 0;
+    /* Mapa */
+    #visitors-map {
+      width: 100%;
+      max-width: 600px;
+      height: 300px;
+      border-radius: 16px;
+      margin: 0 auto 16px auto;
+      box-shadow: 0 2px 16px #00ff9955;
+    }
+    /* Leaflet overrides */
+    .leaflet-container {
+      border-radius: 16px;
+      font-family: inherit;
+    }
+    /* Comentarios */
+    .comments-section {
       background: rgba(0,0,0,0.15);
       border-radius: 10px;
-      padding: 16px 0 0 0;
+      padding: 20px 10px 10px 10px;
+      margin-top: 20px;
+      margin-bottom: 0;
       box-shadow: 0 1px 8px #0003;
+    }
+    .comment-form input, .comment-form textarea {
+      width: calc(100% - 16px);
+      margin-bottom: 7px;
+      padding: 6px;
+      border-radius: 6px;
+      border: none;
+      font-size: 1em;
+      color: #222;
+    }
+    .comment-form button {
+      background: #b6ff00;
+      color: #222;
+      font-weight: bold;
+      border: none;
+      border-radius: 8px;
+      padding: 8px 24px;
+      font-size: 1em;
+      cursor: pointer;
+      margin-top: 2px;
+      margin-bottom: 10px;
+      transition: background 0.2s;
+    }
+    .comment-form button:disabled {
+      background: #aaa;
+      color: #888;
+      cursor: not-allowed;
+    }
+    .comments-list {
+      margin-top: 10px;
+      padding-left: 0;
+      list-style: none;
+      max-height: 170px;
+      overflow-y: auto;
+    }
+    .comments-list li {
+      background: rgba(0,255,90,0.09);
+      color: #222;
+      margin: 0 0 8px 0;
+      border-radius: 8px;
+      padding: 10px 12px 6px 12px;
+      font-size: 1em;
+      box-shadow: 0 1px 5px #0002;
+    }
+    .comments-list .cname {
+      color: #007a4d;
+      font-weight: bold;
+    }
+    .comments-list .ctime {
+      color: #888;
+      font-size: 0.92em;
+      float:right;
     }
     @media (max-width: 750px) {
       .container {
         padding: 20px 7vw 20px 7vw;
         margin: 24px 6vw 0 6vw;
       }
-      h1 { font-size: 2.1em }
-      .important-warning { font-size: 1em; }
-      .counter-box { font-size: 1em;}
-      #visitors-map { height: 210px; }
+      #visitors-map { height: 200px; }
+      .country-list { font-size: 1em;}
     }
   </style>
-  <!-- AmCharts Maps CDN -->
-  <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
-  <script src="https://cdn.amcharts.com/lib/5/map.js"></script>
-  <script src="https://cdn.amcharts.com/lib/5/geodata/worldLow.js"></script>
-  <script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
+  <!-- Leaflet map -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 </head>
 <body>
   <div class="container">
@@ -238,13 +228,12 @@
     <h2>¡Tu sonido, tus reglas!</h2>
     
     <div class="important-warning">
-      <span>⚠️ Para que XadotoSound funcione correctamente y puedas transmitir sonido por el micrófono virtual<br>
-      <b>DEBES descargar e instalar <a href="https://vb-audio.com/Cable/" target="_blank" style="color:#003300;text-decoration:underline;">VB-Audio Virtual Cable</a></b> desde <a href="https://vb-audio.com/Cable/" target="_blank" style="color:#003300;font-weight:bold;">vb-audio.com/Cable/</a>.</span>
+      ⚠️ Para que XadotoSound funcione correctamente y puedas transmitir sonido por el micrófono virtual<br>
+      <b>DEBES descargar e instalar <a href="https://vb-audio.com/Cable/" target="_blank" style="color:#003300;text-decoration:underline;">VB-Audio Virtual Cable</a></b> desde <a href="https://vb-audio.com/Cable/" target="_blank" style="color:#003300;font-weight:bold;">vb-audio.com/Cable/</a>.
     </div>
     
     <div class="download-btn">
       <a class="download-link" href="http://www.mediafire.com/file/bi9zkmz458bno9a/XadotoSound.exe" target="_blank" rel="noopener">
-        <svg width="26" height="26" viewBox="0 0 24 24" fill="#fff" xmlns="http://www.w3.org/2000/svg"><path d="M12 16.5c-.3 0-.5-.1-.7-.3l-5.7-5.7c-.4-.4-.4-1 0-1.4.4-.4 1-.4 1.4 0l4.3 4.3V3c0-.6.4-1 1-1s1 .4 1 1v10.4l4.3-4.3c.4-.4 1-.4 1.4 0 .4.4.4 1 0 1.4l-5.7 5.7c-.2.2-.4.3-.7.3z"/><path d="M20 21H4c-.6 0-1-.4-1-1s.4-1 1-1h16c.6 0 1 .4 1 1s-.4 1-1 1z"/></svg>
         Descargar XadotoSound
       </a>
     </div>
@@ -287,131 +276,137 @@
       Descarga <span style="color:#b6ff00;">XadotoSound V1</span> hoy y lleva tu experiencia de audio al siguiente nivel.</b></p>
     </div>
     
-    <!-- Visualizaciones de personas que entraron a la web -->
-    <div class="counter-box" id="view-counter">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="#b6ff00" xmlns="http://www.w3.org/2000/svg"><path d="M12 4C6.5 4 2 8.5 2 12c0 3.5 4.5 8 10 8s10-4.5 10-8c0-3.5-4.5-8-10-8zm0 14c-4.4 0-8-3.1-8-6 0-2.9 3.6-6 8-6s8 3.1 8 6c0 2.9-3.6 6-8 6zm0-10a4 4 0 100 8 4 4 0 000-8z"></path></svg>
-      <span id="visitas">Cargando visitas...</span>
-    </div>
-    
-    <div class="paypal-btn">
-      <a class="paypal-link" href="https://www.paypal.com/donate/?hosted_button_id=VSP5YRGVEQTXA" target="_blank" rel="noopener">
-        <svg width="22" height="22" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="16" fill="#fff"/><path d="M17.3 5.5c-5.6 0-9.6 3.7-9.6 8.6 0 3.5 2.4 5.5 6.4 5.5h.7c.7 0 1 .3 1 .9 0 .4-.3.8-1 .8h-2.3c-.9 0-1.1.2-1.2.9l-1.2 6.4c-.1.4.1.7.6.7h3.2c.6 0 .9-.3 1-.8l.6-3.1c.1-.4.3-.6.8-.6h1.3c5.6 0 9.6-3.7 9.6-8.6 0-3.5-2.4-5.5-6.4-5.5h-.7c-.7 0-1-.3-1-.9 0-.4.3-.8 1-.8h2.3c.9 0 1.1-.2 1.2-.9l1.2-6.4c.1-.4-.1-.7-.6-.7h-3.2c-.6 0-.9.3-1 .8l-.6 3.1c-.1.4-.3.6-.8.6h-1.3z" fill="#0070ba"/></svg>
-        Donar vía PayPal
-      </a>
-    </div>
-    <span class="version">XadotoSound V1</span>
-    
     <div class="section-title">💬 Comentarios de visitantes</div>
-    <div id="cusdis_thread"
-         data-host="https://cusdis.com"
-         data-app-id="a8af0f9f-7e4d-441a-bf56-3a362c8d5b39"
-         data-page-id="xadotosound"
-         data-page-url="https://xadoto.github.io/"
-         data-page-title="XadotoSound V1"
-    ></div>
+    <div class="comments-section" id="comments-section">
+      <form class="comment-form" id="comment-form">
+        <input type="text" id="comment-name" maxlength="30" placeholder="Tu nombre" required><br>
+        <textarea id="comment-msg" maxlength="300" placeholder="Tu mensaje (máx 300 caracteres)" required></textarea><br>
+        <button type="submit" id="comment-btn">Enviar comentario</button>
+        <div id="comment-info" style="color:#b6ff00;margin-top:4px;"></div>
+      </form>
+      <ul class="comments-list" id="comments-list"></ul>
+    </div>
   </div>
-  <!-- Contador de visualizaciones: localStorage (solo para demo), para producción usar un backend o servicio externo -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script>
-    // Demo: contador básico con localStorage
+    // ----------- MAPA Y CONTADOR DE PAÍSES -----------
+    let userCountry = "Desconocido", userLat = 20, userLng = 0;
+    let countriesVisit = JSON.parse(localStorage.getItem("xadoto_countries")||"{}");
+
+    // Intentar geolocalizar usuario por IP
+    fetch('https://ipwho.is/').then(r=>r.json()).then(data=>{
+      userCountry = data.country || "Desconocido";
+      userLat = data.latitude || 20;
+      userLng = data.longitude || 0;
+      // Guardar país para la lista local
+      if (userCountry !== "Desconocido") {
+        if (!countriesVisit[userCountry]) countriesVisit[userCountry]=0;
+        if (!sessionStorage.getItem('xadoto_country_visited')) {
+          countriesVisit[userCountry]++;
+          localStorage.setItem("xadoto_countries", JSON.stringify(countriesVisit));
+          sessionStorage.setItem('xadoto_country_visited','1');
+        }
+      }
+      renderCountryListAndMap();
+    }).catch(()=>{
+      renderCountryListAndMap();
+    });
+    function renderCountryListAndMap() {
+      // Lista países
+      const sorted = Object.entries(countriesVisit).sort((a,b)=>b[1]-a[1]);
+      document.getElementById('country-list').innerHTML =
+        sorted.length ? sorted.map(c=>`${c[0]} <b>(${c[1]})</b>`).join('<br>') : "¡Aún no hay países registrados!";
+
+      // Mapa
+      let map = L.map('visitors-map').setView([userLat, userLng], 2);
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 8, minZoom: 2,
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+      }).addTo(map);
+
+      // Marcar todos los países que han visitado
+      fetch('https://restcountries.com/v3.1/all').then(r=>r.json()).then(all=>{
+        sorted.forEach(([name,count])=>{
+          let country = all.find(c=>c.translations.spa?.common==name || c.name.common==name || c.name.official==name);
+          if (country && country.latlng) {
+            L.circleMarker(country.latlng, {
+              color: "#b6ff00", radius: 10+Math.sqrt(count)*3, weight:2,
+              fillOpacity: 0.6,
+              fillColor: "#00ff99"
+            }).addTo(map).bindTooltip(`${name}: ${count} visita${count>1?'s':''}`);
+          }
+        });
+        // Marca especial para el usuario actual
+        if (userCountry !== "Desconocido") {
+          let c = all.find(c=>c.translations.spa?.common==userCountry || c.name.common==userCountry || c.name.official==userCountry);
+          if (c && c.latlng) {
+            L.marker(c.latlng, {title:"¡Aquí estás tú!", opacity:0.95})
+              .addTo(map)
+              .bindPopup("¡Tu país detectado!").openPopup();
+          }
+        }
+      });
+    }
+
+    // ----------- CONTADOR DE VISITAS (local) -----------
     (function(){
       const key = 'xadoto_web_views';
       let views = parseInt(localStorage.getItem(key) || "0", 10);
-      // Solo suma una visita única por navegador
       if (!sessionStorage.getItem('xadoto_viewed')) {
         views += 1;
         localStorage.setItem(key, views);
         sessionStorage.setItem('xadoto_viewed', '1');
       }
-      document.getElementById('visitas').textContent = views + ' visita' + (views === 1 ? '' : 's');
+      let box = document.getElementById('view-counter');
+      if (box) box.querySelector("#visitas").textContent = views + ' visita' + (views === 1 ? '' : 's');
     })();
-  </script>
-  <!-- Mapa y lista de países -->
-  <script>
-    // Uso de CountAPI para contar visitas por país (gratis, sin registro)
-    // https://countapi.xyz/
-    const COUNTRY_KEY = "xadoto_countries";
-    const COUNTAPI_NAMESPACE = "xadoto_sound";
-    let userCountryCode = null;
-    let userCountryName = null;
-    // Geolocalización por IP
-    fetch('https://ipwho.is/')
-      .then(r=>r.json()).then(data=>{
-        userCountryCode = data.country_code ? data.country_code : "XX";
-        userCountryName = data.country ? data.country : "Desconocido";
-        // Guardar país del visitante como único por navegador
-        let saved = localStorage.getItem(COUNTRY_KEY);
-        if (!saved || saved.indexOf(userCountryCode) === -1) {
-          // Sumar en CountAPI
-          fetch(`https://api.countapi.xyz/hit/${COUNTAPI_NAMESPACE}/${userCountryCode}`)
-            .then(()=>{});
-          localStorage.setItem(COUNTRY_KEY, (saved ? saved + "," : "") + userCountryCode);
-        }
-        // Cargar datos para el mapa y la lista
-        cargarPaisesYMapa();
-      });
-    // Lista de países y mapa
-    function cargarPaisesYMapa() {
-      // Lista de paises (podrías cachear esto en producción)
-      fetch('https://restcountries.com/v3.1/all')
-        .then(r=>r.json())
-        .then(countries=>{
-          // Para cada país, buscar el contador en CountAPI
-          const fetches = countries.map(c=>
-            fetch('https://api.countapi.xyz/get/' + COUNTAPI_NAMESPACE + '/' + (c.cca2||c.cca3||c.name.common))
-              .then(r=>r.json()).then(res=>({code:c.cca2, name:c.translations.spa?.common||c.name.common, count:res.value||0}))
-          );
-          Promise.all(fetches).then(resList=>{
-            // Solo países con visitas
-            const filtered = resList.filter(r=>r.count>0).sort((a,b)=>b.count-a.count);
-            // Lista HTML
-            let html = filtered.length
-              ? filtered.map(r=>`${r.name} <b>(${r.count})</b>`).join('<br>')
-              : "¡Aún no hay países registrados!";
-            document.getElementById('country-list').innerHTML = html;
-            // Mapa
-            drawMap(filtered);
-          });
-        });
+
+    // ----------- COMENTARIOS LOCALES (máx 2 por IP/navegador) -----------
+    const COMMENTS_KEY = "xadoto_comments";
+    function getComments() {
+      return JSON.parse(localStorage.getItem(COMMENTS_KEY)||"[]");
     }
-    // Dibuja el mapa coloreando países con visitas
-    function drawMap(visitedList) {
-      am5.ready(function() {
-        let root = am5.Root.new("visitors-map");
-        root._logo?.hide();
-        root.setThemes([am5themes_Animated.new(root)]);
-        let chart = root.container.children.push(am5map.MapChart.new(root, {
-          panX: "none", panY: "none", wheelY: "none", projection: am5map.geoMercator()
-        }));
-        let polygonSeries = chart.series.push(am5map.MapPolygonSeries.new(root, {
-          geoJSON: am5geodata_worldLow,
-          valueField: "value",
-          calculateAggregates: true
-        }));
-        // Color de países visitados
-        let colors = am5.ColorSet.new(root, { step: 2, colors: [am5.color(0x99ff00), am5.color(0x009966)] });
-        let data = visitedList.map((r,i)=>({ id: "country:" + r.code, value: r.count }));
-        polygonSeries.data.setAll(data);
-        polygonSeries.mapPolygons.template.setAll({
-          tooltipText: "{name}: [bold]{value}[/]",
-          interactive: true,
-          fill: am5.color(0xcccccc)
-        });
-        polygonSeries.mapPolygons.template.adapters.add("fill", (fill, target)=>{
-          let d = target.dataItem?.dataContext;
-          if (d && d.value > 0) {
-            return colors.getIndex(1 + Math.min(5, d.value));
-          }
-          if (d && d.id && d.id.endsWith(userCountryCode)) {
-            return am5.color(0xffe066);
-          }
-          return fill;
-        });
-        chart.series.push(polygonSeries);
-        chart.appear(1000, 100);
-      });
+    function saveComments(comments) {
+      localStorage.setItem(COMMENTS_KEY, JSON.stringify(comments));
     }
+    function renderComments() {
+      const list = document.getElementById('comments-list');
+      const comments = getComments();
+      list.innerHTML = comments.length
+        ? comments.map(c=>`
+          <li>
+            <span class="cname">${c.name}</span>
+            <span class="ctime">${(new Date(c.time)).toLocaleString()}</span><br>
+            ${c.msg.replace(/</g,"&lt;")}
+          </li>
+        `).join("")
+        : "<li style='color:#888;background:transparent;'>Sé el primero en comentar!</li>";
+    }
+    // Solo se permiten 2 comentarios por navegador
+    document.getElementById('comment-form').addEventListener('submit', function(e){
+      e.preventDefault();
+      const name = document.getElementById('comment-name').value.trim().slice(0,30);
+      const msg = document.getElementById('comment-msg').value.trim().slice(0,300);
+      const info = document.getElementById('comment-info');
+      let comments = getComments();
+      if (comments.length >= 2) {
+        info.innerHTML = "Solo puedes dejar 2 comentarios desde este navegador.";
+        return;
+      }
+      if (!name || !msg) {
+        info.innerHTML = "Debes ingresar tu nombre y mensaje.";
+        return;
+      }
+      comments.push({name, msg, time: Date.now()});
+      saveComments(comments);
+      renderComments();
+      info.innerHTML = "¡Gracias por tu comentario!";
+      document.getElementById('comment-form').reset();
+      document.getElementById('comment-btn').disabled = comments.length >= 2;
+    });
+    renderComments();
+    // Al cargar, deshabilitar si ya hay 2
+    if (getComments().length >= 2) document.getElementById('comment-btn').disabled = true;
   </script>
-  <!-- Cusdis comments embed -->
-  <script async defer src="https://cusdis.com/js/cusdis.es.js"></script>
 </body>
 </html>
