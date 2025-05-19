@@ -4,6 +4,21 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>XadotoSound V1 — ¡Tu sonido, tus reglas!</title>
+  <!-- SEO META TAGS for better visibility -->
+  <meta name="description" content="XadotoSound V1: El programa ideal para DJs, streamers, gamers y creadores. Transmite música y sonidos por el micrófono, usa hotkeys, integra YouTube Music y más.">
+  <meta name="keywords" content="soundboard, virtual cable, transmitir sonidos, música por microfono, XadotoSound, DJ, gaming, streamers, efectos de sonido, hotkeys, YouTube Music, radio online, voz, OBS, Discord, audio, PC, programa para gamers, efectos, virtual audio, Xadoto, soundboard pc, transmitir música, emitir audio, virtual dj, transmisión, programa de sonido, grabar, compartir audio, Windows, control de audio, herramienta para streamers, herramienta para gamers, herramienta para DJs">
+  <meta name="author" content="Xadoto">
+  <meta property="og:title" content="XadotoSound V1 — ¡Tu sonido, tus reglas!">
+  <meta property="og:description" content="Controla tu música y sonidos como un profesional. Ideal para DJs, streamers, gamers y creadores de contenido.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://Xadoto.github.io/">
+  <meta property="og:image" content="URL_A_TU_LOGO_O_CAPTURA.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="XadotoSound V1 — ¡Tu sonido, tus reglas!">
+  <meta name="twitter:description" content="Transmite música y sonidos por tu micrófono virtual. Para DJs, gamers y streamers.">
+  <meta name="twitter:image" content="URL_A_TU_LOGO_O_CAPTURA.png">
+  <link rel="icon" href="favicon.ico">
+  <!-- END SEO META TAGS -->
   <style>
     body, html {
       margin: 0; padding: 0;
@@ -206,11 +221,33 @@
       font-size: 0.92em;
       float:right;
     }
+    /* Etiquetas SEO visibles (opcional) */
+    .taglist {
+      margin-top: 18px;
+      margin-bottom: 18px;
+      text-align: center;
+      font-size: 1em;
+      color: #b6ff00;
+      letter-spacing: 0.5px;
+      opacity: 0.7;
+      line-height: 1.5;
+    }
+    .taglist span {
+      display: inline-block;
+      background: #222e;
+      border-radius: 8px;
+      padding: 2px 10px;
+      margin: 2px 4px 2px 0;
+      font-size: .97em;
+      color: #b6ff00;
+      border: 1px solid #00ff99;
+    }
     @media (max-width: 750px) {
       .container {
         padding: 20px 7vw 20px 7vw;
         margin: 24px 6vw 0 6vw;
       }
+      .taglist { font-size: 0.95em;}
     }
   </style>
 </head>
@@ -218,6 +255,37 @@
   <div class="container">
     <h1>🎶 XadotoSound V1</h1>
     <h2>¡Tu sonido, tus reglas!</h2>
+
+    <!-- Tag cloud para usuarios y SEO -->
+    <div class="taglist" aria-label="Etiquetas relacionadas">
+      <span>soundboard</span>
+      <span>virtual cable</span>
+      <span>transmitir sonidos</span>
+      <span>música por microfono</span>
+      <span>DJs</span>
+      <span>gamers</span>
+      <span>streamers</span>
+      <span>creadores de contenido</span>
+      <span>efectos de sonido</span>
+      <span>hotkeys</span>
+      <span>youtube music</span>
+      <span>radio online</span>
+      <span>voz</span>
+      <span>OBS</span>
+      <span>Discord</span>
+      <span>audio</span>
+      <span>Windows</span>
+      <span>herramienta para gamers</span>
+      <span>herramienta para DJs</span>
+      <span>herramienta para streamers</span>
+      <span>transmitir música</span>
+      <span>virtual dj</span>
+      <span>control de audio</span>
+      <span>programa para pc</span>
+      <span>efectos</span>
+      <span>soundboard pc</span>
+    </div>
+
     <div class="important-warning">
       ⚠️ Para que XadotoSound funcione correctamente y puedas transmitir sonido por el micrófono virtual<br>
       <b>DEBES descargar e instalar <a href="https://vb-audio.com/Cable/" target="_blank" style="color:#003300;text-decoration:underline;">VB-Audio Virtual Cable</a></b> desde <a href="https://vb-audio.com/Cable/" target="_blank" style="color:#003300;font-weight:bold;">vb-audio.com/Cable/</a>.
@@ -273,7 +341,6 @@
       </a>
     </div>
     <span class="version">XadotoSound V1</span>
-
     <div class="section-title">💬 Comentarios</div>
     <div class="comments-section" id="comments-section">
       <form class="comment-form" id="comment-form">
