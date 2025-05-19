@@ -121,231 +121,221 @@
       letter-spacing: 1px;
       text-shadow: 0 1px 6px #000a;
     }
-    .country-list {
-      width:100%;
-      margin: 0 auto 24px auto;
-      color: #e5ffb8;
-      font-size: 1.08em;
-      background: rgba(0,0,0,0.35);
+    /* Visitas */
+    .counter-box {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 30px;
+      margin-bottom: 8px;
+      font-size: 1.16em;
+      font-weight: bold;
+      color: #b6ff00;
+      background: rgba(0,255,90,0.08);
       border-radius: 10px;
-      padding: 12px 8px 10px 16px;
-      box-shadow: 0 2px 12px #0003;
+      padding: 10px 18px 8px 18px;
+      box-shadow: 0 1px 10px #00ff9955;
+      letter-spacing: 0.5px;
+      gap: 9px;
+      width: fit-content;
+      margin-left: auto;
+      margin-right: auto;
+      animation: bounceIn 1.7s;
+    }
+    .counter-box svg {
+      margin-right: 7px;
+    }
+    /* Comentarios */
+    .comments-section {
+      background: rgba(0,0,0,0.15);
+      border-radius: 10px;
+      padding: 20px 10px 10px 10px;
+      margin-top: 20px;
+      margin-bottom: 0;
+      box-shadow: 0 1px 8px #0003;
+    }
+    .comment-form input, .comment-form textarea {
+      width: calc(100% - 16px);
+      margin-bottom: 7px;
+      padding: 6px;
+      border-radius: 6px;
+      border: none;
+      font-size: 1em;
+      color: #222;
+    }
+    .comment-form button {
+      background: #b6ff00;
+      color: #222;
+      font-weight: bold;
+      border: none;
+      border-radius: 8px;
+      padding: 8px 24px;
+      font-size: 1em;
+      cursor: pointer;
+      margin-top: 2px;
+      margin-bottom: 10px;
+      transition: background 0.2s;
+    }
+    .comment-form button:disabled {
+      background: #aaa;
+      color: #888;
+      cursor: not-allowed;
+    }
+    .comments-list {
+      margin-top: 10px;
+      padding-left: 0;
+      list-style: none;
       max-height: 170px;
       overflow-y: auto;
-      letter-spacing: 0.5px;
     }
-    #visitors-map {
-      width: 100%;
-      max-width: 600px;
-      height: 300px;
-      border-radius: 16px;
-      margin: 0 auto 16px auto;
-      box-shadow: 0 2px 16px #00ff9955;
+    .comments-list li {
+      background: rgba(0,255,90,0.09);
+      color: #222;
+      margin: 0 0 8px 0;
+      border-radius: 8px;
+      padding: 10px 12px 6px 12px;
+      font-size: 1em;
+      box-shadow: 0 1px 5px #0002;
     }
-    /* Leaflet overrides */
-    .leaflet-container {
-      border-radius: 16px;
-      font-family: inherit;
+    .comments-list .cname {
+      color: #007a4d;
+      font-weight: bold;
+    }
+    .comments-list .ctime {
+      color: #888;
+      font-size: 0.92em;
+      float:right;
     }
     @media (max-width: 750px) {
       .container {
         padding: 20px 7vw 20px 7vw;
         margin: 24px 6vw 0 6vw;
       }
-      #visitors-map { height: 200px; }
-      .country-list { font-size: 1em;}
     }
   </style>
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 </head>
 <body>
-  <div class="container" id="main">
-    <!-- Todo el contenido se coloca por JS multiidioma -->
+  <div class="container">
+    <h1>🎶 XadotoSound V1</h1>
+    <h2>¡Tu sonido, tus reglas!</h2>
+    <div class="important-warning">
+      ⚠️ Para que XadotoSound funcione correctamente y puedas transmitir sonido por el micrófono virtual<br>
+      <b>DEBES descargar e instalar <a href="https://vb-audio.com/Cable/" target="_blank" style="color:#003300;text-decoration:underline;">VB-Audio Virtual Cable</a></b> desde <a href="https://vb-audio.com/Cable/" target="_blank" style="color:#003300;font-weight:bold;">vb-audio.com/Cable/</a>.
+    </div>
+    <div class="download-btn">
+      <a class="download-link" href="http://www.mediafire.com/file/bi9zkmz458bno9a/XadotoSound.exe" target="_blank" rel="noopener">
+        Descargar XadotoSound
+      </a>
+    </div>
+    <div class="section-title">👁️ Visitas a la web</div>
+    <div class="counter-box" id="view-counter">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="#b6ff00" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 4C6.5 4 2 8.5 2 12c0 3.5 4.5 8 10 8s10-4.5 10-8c0-3.5-4.5-8-10-8zm0 14c-4.4 0-8-3.1-8-6 0-2.9 3.6-6 8-6s8 3.1 8 6c0 2.9-3.6 6-8 6zm0-10a4 4 0 100 8 4 4 0 000-8z"></path>
+      </svg>
+      <span id="visitas">Cargando visitas...</span>
+    </div>
+    <div class="promo-section">
+      <p>
+        <b>XadotoSound V1</b> es la solución profesional para DJs, streamers, gamers, creadores de contenido y amantes de la música que buscan un control total sobre el audio en su computadora. Con una interfaz moderna y amigable, XadotoSound te permite asignar canciones a teclas de acceso rápido, controlar el volumen, elegir tus dispositivos de entrada y salida, y ahora también reproducir música directamente desde YouTube Music.<br><br>
+        Además, <b>XadotoSound</b> es ideal para <b>videojuegos y chat de voz</b>: transmite sonido personalizado por tu micrófono virtual, haciendo que tu música, efectos y clips favoritos sean escuchados en partidas, Discord, transmisiones y más. ¡Convierte cualquier momento en una experiencia única y profesional!
+      </p>
+    </div>
+    <div class="promo-section">
+      <b>Características principales:</b>
+      <ul>
+        <li>🎵 <b>Reproduce archivos MP3</b> y asigna canciones a teclas personalizadas para lanzarlas al instante.</li>
+        <li>🔗 <b>Reproducción directa de YouTube Music</b>: simplemente pega el enlace y escucha tu música favorita sin complicaciones.</li>
+        <li>🎚️ <b>Selector profesional de dispositivos</b>: elige fácilmente tu altavoz, auricular o micrófono preferido.</li>
+        <li>🎮 <b>Transmite sonidos por tu micrófono virtual</b> para videojuegos, transmisiones o plataformas de chat.</li>
+        <li>🎹 <b>Hotkeys globales</b>: reproduce, detén y controla tu música desde cualquier aplicación.</li>
+        <li>🌐 <b>Sistema multilenguaje</b>: disfruta de la interfaz en español, inglés y más.</li>
+        <li>💾 <b>Guarda y carga tus playlists</b> para tener siempre tu set listo.</li>
+        <li>✨ <b>Interfaz visual atractiva</b> con fondo personalizable y animaciones.</li>
+        <li>💙 <b>Botón de donación PayPal</b> para apoyar el desarrollo y nuevas funciones.</li>
+      </ul>
+    </div>
+    <div class="promo-section">
+      <b>¿Por qué elegir XadotoSound?</b>
+      <ul>
+        <li>✅ Fácil de usar, pero potente y versátil.</li>
+        <li>✅ Perfecto para eventos, transmisiones, videojuegos, radios online y más.</li>
+        <li>✅ Actualizaciones frecuentes y soporte directo.</li>
+        <li>✅ ¡Sin cables virtuales ni configuraciones complicadas!</li>
+      </ul>
+    </div>
+    <div class="promo-section" style="text-align:center;">
+      <p style="font-size:1.13em;"><b>¡Descubre una nueva forma de controlar tu música y sonidos!<br>
+      Descarga <span style="color:#b6ff00;">XadotoSound V1</span> hoy y lleva tu experiencia de audio al siguiente nivel.</b></p>
+    </div>
+    <div class="paypal-btn">
+      <a class="paypal-link" href="https://www.paypal.com/donate/?hosted_button_id=VSP5YRGVEQTXA" target="_blank" rel="noopener">
+        Donar vía PayPal
+      </a>
+    </div>
+    <span class="version">XadotoSound V1</span>
+
+    <div class="section-title">💬 Comentarios</div>
+    <div class="comments-section" id="comments-section">
+      <form class="comment-form" id="comment-form">
+        <input type="text" id="comment-name" maxlength="30" placeholder="Tu nombre" required><br>
+        <textarea id="comment-msg" maxlength="300" placeholder="Tu mensaje (máx 300 caracteres)" required></textarea><br>
+        <button type="submit" id="comment-btn">Enviar comentario</button>
+        <div id="comment-info" style="color:#b6ff00;margin-top:4px;"></div>
+      </form>
+      <ul class="comments-list" id="comments-list"></ul>
+    </div>
   </div>
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-  <!-- Cusdis comments embed -->
-  <script async defer src="https://cusdis.com/js/cusdis.es.js"></script>
   <script>
-    // ---- Multiidioma ES/EN automático por navegador o querystring ----
-    const lang = (new URLSearchParams(location.search).get("lang") || navigator.language.slice(0,2)).toLowerCase().startsWith("en") ? "en" : "es";
-    const T = {
-      es: {
-        title: "XadotoSound V1 — ¡Tu sonido, tus reglas!",
-        subtitle: "¡Tu sonido, tus reglas!",
-        warning: `⚠️ Para que XadotoSound funcione correctamente y puedas transmitir sonido por el micrófono virtual<br>
-        <b>DEBES descargar e instalar <a href="https://vb-audio.com/Cable/" target="_blank" style="color:#003300;text-decoration:underline;">VB-Audio Virtual Cable</a></b> desde <a href="https://vb-audio.com/Cable/" target="_blank" style="color:#003300;font-weight:bold;">vb-audio.com/Cable/</a>.`,
-        download: "Descargar XadotoSound",
-        visitors: "🌍 Visitantes por país",
-        loading_countries: "Cargando países...",
-        no_countries: "¡Aún no hay países registrados!",
-        promo1: `<b>XadotoSound V1</b> es la solución profesional para DJs, streamers, gamers, creadores de contenido y amantes de la música que buscan un control total sobre el audio en su computadora. Con una interfaz moderna y amigable, XadotoSound te permite asignar canciones a teclas de acceso rápido, controlar el volumen, elegir tus dispositivos de entrada y salida, y ahora también reproducir música directamente desde YouTube Music.<br><br>
-        Además, <b>XadotoSound</b> es ideal para <b>videojuegos y chat de voz</b>: transmite sonido personalizado por tu micrófono virtual, haciendo que tu música, efectos y clips favoritos sean escuchados en partidas, Discord, transmisiones y más. ¡Convierte cualquier momento en una experiencia única y profesional!`,
-        features: `<b>Características principales:</b>
-        <ul>
-         <li>🎵 <b>Reproduce archivos MP3</b> y asigna canciones a teclas personalizadas para lanzarlas al instante.</li>
-         <li>🔗 <b>Reproducción directa de YouTube Music</b>: simplemente pega el enlace y escucha tu música favorita sin complicaciones.</li>
-         <li>🎚️ <b>Selector profesional de dispositivos</b>: elige fácilmente tu altavoz, auricular o micrófono preferido.</li>
-         <li>🎮 <b>Transmite sonidos por tu micrófono virtual</b> para videojuegos, transmisiones o plataformas de chat.</li>
-         <li>🎹 <b>Hotkeys globales</b>: reproduce, detén y controla tu música desde cualquier aplicación.</li>
-         <li>🌐 <b>Sistema multilenguaje</b>: disfruta de la interfaz en español, inglés y más.</li>
-         <li>💾 <b>Guarda y carga tus playlists</b> para tener siempre tu set listo.</li>
-         <li>✨ <b>Interfaz visual atractiva</b> con fondo personalizable y animaciones.</li>
-         <li>💙 <b>Botón de donación PayPal</b> para apoyar el desarrollo y nuevas funciones.</li>
-        </ul>`,
-        why: `<b>¿Por qué elegir XadotoSound?</b>
-        <ul>
-         <li>✅ Fácil de usar, pero potente y versátil.</li>
-         <li>✅ Perfecto para eventos, transmisiones, videojuegos, radios online y más.</li>
-         <li>✅ Actualizaciones frecuentes y soporte directo.</li>
-         <li>✅ ¡Sin cables virtuales ni configuraciones complicadas!</li>
-        </ul>`,
-        discover: `¡Descubre una nueva forma de controlar tu música y sonidos!<br>
-        Descarga <span style="color:#b6ff00;">XadotoSound V1</span> hoy y lleva tu experiencia de audio al siguiente nivel.`,
-        paypal: "Donar vía PayPal",
-        comments: "💬 Comentarios públicos (modera con tu cuenta Cusdis)",
-      },
-      en: {
-        title: "XadotoSound V1 — Your Sound, Your Rules!",
-        subtitle: "Your sound, your rules!",
-        warning: `⚠️ For XadotoSound to work correctly and to transmit sound through the virtual microphone<br>
-        <b>YOU MUST download and install <a href="https://vb-audio.com/Cable/" target="_blank" style="color:#003300;text-decoration:underline;">VB-Audio Virtual Cable</a></b> from <a href="https://vb-audio.com/Cable/" target="_blank" style="color:#003300;font-weight:bold;">vb-audio.com/Cable/</a>.`,
-        download: "Download XadotoSound",
-        visitors: "🌍 Visitors by country",
-        loading_countries: "Loading countries...",
-        no_countries: "No countries registered yet!",
-        promo1: `<b>XadotoSound V1</b> is the professional solution for DJs, streamers, gamers, content creators, and music lovers who want total control over audio on their PC. With a modern and friendly interface, XadotoSound lets you assign songs to hotkeys, control volume, select input/output devices, and now also play music directly from YouTube Music.<br><br>
-        Plus, <b>XadotoSound</b> is perfect for <b>games and voice chat</b>: transmit custom sounds via your virtual microphone, so your music, effects, and favorite clips are heard in games, Discord, streams, and more. Make every moment unique and professional!`,
-        features: `<b>Main features:</b>
-        <ul>
-         <li>🎵 <b>Play MP3 files</b> and assign them to hotkeys for instant use.</li>
-         <li>🔗 <b>Direct YouTube Music playback</b>: just paste the link and listen to your favorites with no hassle.</li>
-         <li>🎚️ <b>Professional device selector</b>: easily choose your preferred speaker, headset, or microphone.</li>
-         <li>🎮 <b>Transmit sounds via your virtual microphone</b> for games, streaming, or chat platforms.</li>
-         <li>🎹 <b>Global hotkeys</b>: play, stop, and control music from any app.</li>
-         <li>🌐 <b>Multi-language system</b>: enjoy the interface in English, Spanish, and more.</li>
-         <li>💾 <b>Save and load playlists</b> to always have your set ready.</li>
-         <li>✨ <b>Attractive visual interface</b> with customizable backgrounds and animations.</li>
-         <li>💙 <b>PayPal donation button</b> to support development and new features.</li>
-        </ul>`,
-        why: `<b>Why choose XadotoSound?</b>
-        <ul>
-         <li>✅ Easy to use, but powerful and versatile.</li>
-         <li>✅ Perfect for events, streaming, gaming, online radio, and more.</li>
-         <li>✅ Frequent updates and direct support.</li>
-         <li>✅ No virtual cables or complicated setups!</li>
-        </ul>`,
-        discover: `Discover a new way to control your music and sounds!<br>
-        Download <span style="color:#b6ff00;">XadotoSound V1</span> today and take your audio experience to the next level.`,
-        paypal: "Donate via PayPal",
-        comments: "💬 Public comments (moderate with your Cusdis account)",
+    // VISITAS (solo local, puedes cambiar a CountAPI si quieres global)
+    (function(){
+      const key = 'xadoto_web_views';
+      let views = parseInt(localStorage.getItem(key) || "0", 10);
+      if (!sessionStorage.getItem('xadoto_viewed')) {
+        views += 1;
+        localStorage.setItem(key, views);
+        sessionStorage.setItem('xadoto_viewed', '1');
       }
-    }[lang];
+      document.getElementById('visitas').textContent = views + ' visita' + (views === 1 ? '' : 's');
+    })();
 
-    document.title = T.title;
-    document.getElementById('main').innerHTML = `
-      <h1>🎶 XadotoSound V1</h1>
-      <h2>${T.subtitle}</h2>
-      <div class="important-warning">${T.warning}</div>
-      <div class="download-btn">
-        <a class="download-link" href="http://www.mediafire.com/file/bi9zkmz458bno9a/XadotoSound.exe" target="_blank" rel="noopener">
-          ${T.download}
-        </a>
-      </div>
-      <div class="section-title">${T.visitors}</div>
-      <div id="visitors-map"></div>
-      <div class="country-list" id="country-list">${T.loading_countries}</div>
-      <div class="promo-section"><p>${T.promo1}</p></div>
-      <div class="promo-section">${T.features}</div>
-      <div class="promo-section">${T.why}</div>
-      <div class="promo-section" style="text-align:center;">
-        <p style="font-size:1.13em;"><b>${T.discover}</b></p>
-      </div>
-      <div class="paypal-btn">
-        <a class="paypal-link" href="https://www.paypal.com/donate/?hosted_button_id=VSP5YRGVEQTXA" target="_blank" rel="noopener">
-          ${T.paypal}
-        </a>
-      </div>
-      <div class="section-title">${T.comments}</div>
-      <div id="cusdis_thread"
-        data-host="https://cusdis.com"
-        data-app-id="REEMPLAZA_AQUI_POR_TU_APP_ID_CUSDIS"
-        data-page-id="xadotosound"
-        data-page-url="${location.href}"
-        data-page-title="XadotoSound V1"
-      ></div>
-    `;
-
-    // ----------- MAPA Y LISTA DE PAÍSES PÚBLICO (CountAPI) -----------
-    // Guía: https://countapi.xyz/
-    const COUNTAPI_NAMESPACE = "xadotosound_public";
-    let userCountryCode = null, userCountryName = null, userLat=20, userLng=0;
-    // Geolocalización por IP
-    fetch('https://ipwho.is/')
-      .then(r=>r.json()).then(data=>{
-        userCountryCode = data.country_code || "XX";
-        userCountryName = data.country || "Unknown";
-        userLat = data.latitude || 20; userLng = data.longitude || 0;
-        // Sumar visita por país (máx 1 vez por sesión)
-        if (!sessionStorage.getItem('xadoto_country_visited')) {
-          fetch(`https://api.countapi.xyz/hit/${COUNTAPI_NAMESPACE}/${userCountryCode}`).then(()=>{});
-          sessionStorage.setItem('xadoto_country_visited','1');
-        }
-        renderCountryListAndMap();
-      }).catch(()=>renderCountryListAndMap());
-    function renderCountryListAndMap() {
-      // Solo los países con visitas (CountAPI no tiene endpoint para listar todos, por simplicidad mostramos los principales)
-      // Ejemplo: lista de países más comunes
-      const mainCountries = ["US","MX","ES","AR","CO","CL","BR","PE","FR","GB","DE","IT","CA","VE","UY","EC"];
-      // Mostrar primero el país del usuario
-      let codes = [userCountryCode, ...mainCountries.filter(c=>c!==userCountryCode)];
-      Promise.all(codes.map(code=>
-        fetch('https://api.countapi.xyz/get/' + COUNTAPI_NAMESPACE + '/' + code)
-          .then(r=>r.json())
-          .then(res=>({code, count:res.value||0}))
-      )).then(resList=>{
-        // Quitar los de valor 0
-        const filtered = resList.filter(r=>r.count>0);
-        if(filtered.length){
-          fetch('https://restcountries.com/v3.1/all')
-            .then(r=>r.json())
-            .then(countries=>{
-              let countryMap = {};
-              countries.forEach(c=>{
-                countryMap[c.cca2]=lang=="es"?(c.translations.spa?.common||c.name.common):c.name.common;
-              });
-              document.getElementById('country-list').innerHTML =
-                filtered.map(r=>`${countryMap[r.code]||r.code} <b>(${r.count})</b>`).join('<br>');
-              // Mapa
-              let map = L.map('visitors-map').setView([userLat, userLng], 2);
-              L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                maxZoom: 8, minZoom: 2, attribution: ''
-              }).addTo(map);
-              filtered.forEach(r=>{
-                let country = countries.find(c=>c.cca2==r.code);
-                if (country && country.latlng)
-                  L.circleMarker(country.latlng, {
-                    color: "#b6ff00", radius: 10+Math.sqrt(r.count)*3, weight:2,
-                    fillOpacity: 0.6,
-                    fillColor: "#00ff99"
-                  }).addTo(map).bindTooltip(`${countryMap[r.code]||r.code}: ${r.count} visita${r.count>1?'s':''}`);
-              });
-              // Marca especial para el usuario actual
-              let currentCountry = countries.find(c=>c.cca2==userCountryCode);
-              if (currentCountry && currentCountry.latlng) {
-                L.marker(currentCountry.latlng, {title:"¡Aquí estás tú!", opacity:0.95})
-                  .addTo(map)
-                  .bindPopup(lang=="es"?"¡Tu país detectado!":"Your country detected!").openPopup();
-              }
-            });
-        } else {
-          document.getElementById('country-list').innerHTML = T.no_countries;
-          let map = L.map('visitors-map').setView([userLat, userLng], 2);
-          L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            maxZoom: 8, minZoom: 2, attribution: ''
-          }).addTo(map);
-        }
-      });
+    // COMENTARIOS públicos (guarda solo en el navegador de cada usuario, sin moderación)
+    const COMMENTS_KEY = "xadoto_comments_public";
+    function getComments() {
+      return JSON.parse(localStorage.getItem(COMMENTS_KEY)||"[]");
     }
+    function saveComments(comments) {
+      localStorage.setItem(COMMENTS_KEY, JSON.stringify(comments));
+    }
+    function renderComments() {
+      const list = document.getElementById('comments-list');
+      const comments = getComments();
+      list.innerHTML = comments.length
+        ? comments.map(c=>`
+          <li>
+            <span class="cname">${c.name}</span>
+            <span class="ctime">${(new Date(c.time)).toLocaleString()}</span><br>
+            ${c.msg.replace(/</g,"&lt;")}
+          </li>
+        `).join("")
+        : "<li style='color:#888;background:transparent;'>Sé el primero en comentar!</li>";
+    }
+    document.getElementById('comment-form').addEventListener('submit', function(e){
+      e.preventDefault();
+      const name = document.getElementById('comment-name').value.trim().slice(0,30);
+      const msg = document.getElementById('comment-msg').value.trim().slice(0,300);
+      const info = document.getElementById('comment-info');
+      if (!name || !msg) {
+        info.innerHTML = "Debes ingresar tu nombre y mensaje.";
+        return;
+      }
+      let comments = getComments();
+      comments.push({name, msg, time: Date.now()});
+      saveComments(comments);
+      renderComments();
+      info.innerHTML = "¡Gracias por tu comentario!";
+      document.getElementById('comment-form').reset();
+    });
+    renderComments();
   </script>
 </body>
 </html>
