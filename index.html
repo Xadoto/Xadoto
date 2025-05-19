@@ -50,19 +50,6 @@
       font-weight: 400;
       color: #fff;
     }
-    ul {
-      font-size: 1.09em;
-      margin-top: 0.3em;
-      margin-bottom: 1.2em;
-      padding-left: 22px;
-    }
-    ul li {
-      margin-bottom: 0.7em;
-      line-height: 1.5;
-    }
-    .promo-section {
-      margin-bottom: 2em;
-    }
     .important-warning {
       background: linear-gradient(90deg,#b6ff00 0,#00ff99 100%);
       color: #053e0b;
@@ -189,10 +176,44 @@
     .counter-box svg {
       margin-right: 7px;
     }
-    @keyframes bounceIn {
-      0% {transform: scale(0.7);}
-      60% {transform: scale(1.1);}
-      100% {transform: scale(1);}
+    .section-title {
+      text-align:center;
+      font-size: 1.2em;
+      color: #b6ff00;
+      font-weight: bold;
+      margin: 36px 0 16px 0;
+      letter-spacing: 1px;
+      text-shadow: 0 1px 6px #000a;
+    }
+    #visitors-map {
+      width: 100%;
+      height: 340px;
+      border-radius: 16px;
+      margin: 0 auto 16px auto;
+      box-shadow: 0 2px 16px #00ff9955;
+      background: #e6ffe6;
+    }
+    .country-list {
+      width:100%;
+      margin: 0 auto 24px auto;
+      color: #e5ffb8;
+      font-size: 1.08em;
+      background: rgba(0,0,0,0.35);
+      border-radius: 10px;
+      padding: 12px 8px 10px 16px;
+      box-shadow: 0 2px 12px #0003;
+      max-height: 170px;
+      overflow-y: auto;
+      letter-spacing: 0.5px;
+    }
+    /* Cusdis comments */
+    #cusdis_thread {
+      margin-top: 18px;
+      margin-bottom: 0;
+      background: rgba(0,0,0,0.15);
+      border-radius: 10px;
+      padding: 16px 0 0 0;
+      box-shadow: 0 1px 8px #0003;
     }
     @media (max-width: 750px) {
       .container {
@@ -202,8 +223,14 @@
       h1 { font-size: 2.1em }
       .important-warning { font-size: 1em; }
       .counter-box { font-size: 1em;}
+      #visitors-map { height: 210px; }
     }
   </style>
+  <!-- AmCharts Maps CDN -->
+  <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
+  <script src="https://cdn.amcharts.com/lib/5/map.js"></script>
+  <script src="https://cdn.amcharts.com/lib/5/geodata/worldLow.js"></script>
+  <script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
 </head>
 <body>
   <div class="container">
@@ -221,6 +248,10 @@
         Descargar XadotoSound
       </a>
     </div>
+
+    <div class="section-title">🌍 Visitantes por país</div>
+    <div id="visitors-map"></div>
+    <div class="country-list" id="country-list">Cargando países...</div>
 
     <div class="promo-section">
       <p>
@@ -269,8 +300,16 @@
       </a>
     </div>
     <span class="version">XadotoSound V1</span>
+    
+    <div class="section-title">💬 Comentarios de visitantes</div>
+    <div id="cusdis_thread"
+         data-host="https://cusdis.com"
+         data-app-id="a8af0f9f-7e4d-441a-bf56-3a362c8d5b39"
+         data-page-id="xadotosound"
+         data-page-url="https://xadoto.github.io/"
+         data-page-title="XadotoSound V1"
+    ></div>
   </div>
-  
   <!-- Contador de visualizaciones: localStorage (solo para demo), para producción usar un backend o servicio externo -->
   <script>
     // Demo: contador básico con localStorage
@@ -286,5 +325,93 @@
       document.getElementById('visitas').textContent = views + ' visita' + (views === 1 ? '' : 's');
     })();
   </script>
+  <!-- Mapa y lista de países -->
+  <script>
+    // Uso de CountAPI para contar visitas por país (gratis, sin registro)
+    // https://countapi.xyz/
+    const COUNTRY_KEY = "xadoto_countries";
+    const COUNTAPI_NAMESPACE = "xadoto_sound";
+    let userCountryCode = null;
+    let userCountryName = null;
+    // Geolocalización por IP
+    fetch('https://ipwho.is/')
+      .then(r=>r.json()).then(data=>{
+        userCountryCode = data.country_code ? data.country_code : "XX";
+        userCountryName = data.country ? data.country : "Desconocido";
+        // Guardar país del visitante como único por navegador
+        let saved = localStorage.getItem(COUNTRY_KEY);
+        if (!saved || saved.indexOf(userCountryCode) === -1) {
+          // Sumar en CountAPI
+          fetch(`https://api.countapi.xyz/hit/${COUNTAPI_NAMESPACE}/${userCountryCode}`)
+            .then(()=>{});
+          localStorage.setItem(COUNTRY_KEY, (saved ? saved + "," : "") + userCountryCode);
+        }
+        // Cargar datos para el mapa y la lista
+        cargarPaisesYMapa();
+      });
+    // Lista de países y mapa
+    function cargarPaisesYMapa() {
+      // Lista de paises (podrías cachear esto en producción)
+      fetch('https://restcountries.com/v3.1/all')
+        .then(r=>r.json())
+        .then(countries=>{
+          // Para cada país, buscar el contador en CountAPI
+          const fetches = countries.map(c=>
+            fetch('https://api.countapi.xyz/get/' + COUNTAPI_NAMESPACE + '/' + (c.cca2||c.cca3||c.name.common))
+              .then(r=>r.json()).then(res=>({code:c.cca2, name:c.translations.spa?.common||c.name.common, count:res.value||0}))
+          );
+          Promise.all(fetches).then(resList=>{
+            // Solo países con visitas
+            const filtered = resList.filter(r=>r.count>0).sort((a,b)=>b.count-a.count);
+            // Lista HTML
+            let html = filtered.length
+              ? filtered.map(r=>`${r.name} <b>(${r.count})</b>`).join('<br>')
+              : "¡Aún no hay países registrados!";
+            document.getElementById('country-list').innerHTML = html;
+            // Mapa
+            drawMap(filtered);
+          });
+        });
+    }
+    // Dibuja el mapa coloreando países con visitas
+    function drawMap(visitedList) {
+      am5.ready(function() {
+        let root = am5.Root.new("visitors-map");
+        root._logo?.hide();
+        root.setThemes([am5themes_Animated.new(root)]);
+        let chart = root.container.children.push(am5map.MapChart.new(root, {
+          panX: "none", panY: "none", wheelY: "none", projection: am5map.geoMercator()
+        }));
+        let polygonSeries = chart.series.push(am5map.MapPolygonSeries.new(root, {
+          geoJSON: am5geodata_worldLow,
+          valueField: "value",
+          calculateAggregates: true
+        }));
+        // Color de países visitados
+        let colors = am5.ColorSet.new(root, { step: 2, colors: [am5.color(0x99ff00), am5.color(0x009966)] });
+        let data = visitedList.map((r,i)=>({ id: "country:" + r.code, value: r.count }));
+        polygonSeries.data.setAll(data);
+        polygonSeries.mapPolygons.template.setAll({
+          tooltipText: "{name}: [bold]{value}[/]",
+          interactive: true,
+          fill: am5.color(0xcccccc)
+        });
+        polygonSeries.mapPolygons.template.adapters.add("fill", (fill, target)=>{
+          let d = target.dataItem?.dataContext;
+          if (d && d.value > 0) {
+            return colors.getIndex(1 + Math.min(5, d.value));
+          }
+          if (d && d.id && d.id.endsWith(userCountryCode)) {
+            return am5.color(0xffe066);
+          }
+          return fill;
+        });
+        chart.series.push(polygonSeries);
+        chart.appear(1000, 100);
+      });
+    }
+  </script>
+  <!-- Cusdis comments embed -->
+  <script async defer src="https://cusdis.com/js/cusdis.es.js"></script>
 </body>
 </html>
